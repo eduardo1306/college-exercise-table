@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <script></script>
+  <title>Tabela Faculdade</title>
+</head>
+<body>
+  <h2 class="title">LANÇAMENTO DE NOTAS</h2>
+  <form>
+    <label for="select-disciplina">Selecione a disciplina</label>
+    <select id="select-disciplina">      
+      <option id="select-disciplina-op1" value="Introdução à informática">Introdução à informática</option>      
+      <option id="select-disciplina-op2" value="Linguagens de Programação">Linguagens de Programação</option>      
+      <option id="select-disciplina-op3" value="Programação de Computadores">Programação de Computadores</option>      
+    </select>
+    <table>
+      <thead>
+        <th>Nome do aluno</th>
+        <th>1 Prova</th>
+        <th>2 Prova</th>
+        <th>Exame</th>
+        <th>Média</th>
+        <th>Faltas</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Joana da Silva</td>
+          <td>
+            <input onblur="isFocused(event, 'joana')" type="number" id="joana-prova1" min="0" />
+          </td>
+          <td>
+            <input onblur="isFocused(event, 'joana')" type="number" oninput="calMedia('joana')" id="joana-prova2" min="0" />
+          </td>
+          <td>
+            <input type="number" oninput="calMedia('joana')" id="joana-exame" min="0" />
+          </td>
+          <td>
+            <input type="number" id="joana-media" disabled />
+          </td>
+          <td>
+            <input onblur="isFocused(event, 'joana')" type="number" id="joana-falta" min="0" />
+          </td>                 
+        </tr>
+        <tr>
+          <td>Maria do Socorro</td>
+          <td>
+            <input onblur="isFocused(event, 'maria')" type="number" id="maria-prova1" min="0" />
+          </td>
+          <td>
+            <input onblur="isFocused(event, 'maria')" type="number" oninput="calMedia('maria')" id="maria-prova2" min="0" />
+          </td>
+          <td>
+            <input type="number" oninput="calMedia('maria')" id="maria-exame" min="0" />
+          </td>
+          <td>
+            <input type="number" id="maria-media" disabled />
+          </td>
+          <td>
+            <input onblur="isFocused(event, 'maria')" type="number" id="maria-falta" min="0" />
+          </td>                 
+        </tr>
+        <tr>
+          <td>Pedro Santos</td>
+          <td>
+            <input onblur="isFocused(event, 'pedro')" type="number" id="pedro-prova1" min="0" />
+          </td>
+          <td>
+            <input onblur="isFocused(event, 'pedro')" type="number" oninput="calMedia('pedro')" id="pedro-prova2" min="0" />
+          </td>
+          <td>
+            <input type="number" oninput="calMedia('pedro')" id="pedro-exame" min="0" />
+          </td>
+          <td>
+            <input type="number" id="pedro-media" disabled />            
+          </td>
+          <td>
+            <input onblur="isFocused(event, 'pedro')" type="number" id="pedro-falta" min="0" />
+          </td>                 
+        </tr>        
+      </tbody>            
+    </table>
+    <div class="btn-group">
+      <button onclick="handleSubmit(event)" type="submit" id="btn-submit">Salvar</button>
+      <button id="btn-clear">Limpar</button>
+    </div>
+  </form>
+</body>
+<script>
+  const joanaProva1 = document.getElementById('joana-prova1');
+  const joanaProva2 = document.getElementById('joana-prova2');
+  const joanaFalta = document.getElementById('joana-falta');
+
+  const mariaProva1 = document.getElementById('maria-prova1');
+  const mariaProva2 = document.getElementById('maria-prova2');
+  const mariaFalta = document.getElementById('maria-falta');
+
+  const pedroProva1 = document.getElementById('pedro-prova1');
+  const pedroProva2 = document.getElementById('pedro-prova2');
+  const pedroFalta = document.getElementById('pedro-falta');
+
+  function handleSubmit(event) {    
+    event.preventDefault();
+    
+    if(
+    joanaProva1.value > 0 &&
+    joanaProva2.value > 0 &&
+    joanaFalta.value > 0 &&
+    mariaProva1.value > 0 &&
+    mariaProva2.value > 0 &&
+    mariaFalta.value > 0 &&
+    pedroProva1.value > 0 &&
+    pedroProva2.value > 0 &&
+    pedroFalta.value > 0 
+    ) {        
+      alert('Formulário enviado com sucesso!');
+    } else {
+      alert('Verifique se os campos foram preenchidos devidamente!');
+    }
+  }  
+
+  function isFocused(event, aluno) {
+    if(
+      event.type = 'blur' &&
+      event.target.value !== '' &&
+      event.target.id !== `${aluno}-media` &&
+      event.target.id !== `${aluno}-exame`) {
+      event.target.style.border = '2px solid navy';
+    } else {
+      event.target.style.border = '2px solid red';   
+    }    
+  }    
+  
+  function calMedia(aluno) {
+    const alunoProva1 = Number(document.getElementById(`${aluno}-prova1`).value);
+    const alunoProva2 = Number(document.getElementById(`${aluno}-prova2`).value);
+    const alunoExame = Number(document.getElementById(`${aluno}-exame`).value);         
+    const alunoMedia = document.getElementById(`${aluno}-media`);
+    
+    let nota = 0;
+    let media = 0;    
+
+    if(alunoExame > 0){  
+      
+      nota = alunoProva1 + alunoProva2 + alunoExame;
+      media = nota / 3;
+      
+      return alunoMedia.value = media.toFixed(2);       
+    }
+
+    nota = alunoProva1 + alunoProva2;
+    media = nota / 2; 
+
+    alunoMedia.value = media.toFixed(2);    
+  }
+</script>
+</html>
